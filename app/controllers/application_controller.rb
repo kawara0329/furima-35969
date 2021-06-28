@@ -1,10 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :basic_auth
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
   private
 
   def basic_auth
