@@ -15,7 +15,6 @@
 ### Association
 - has_many :items
 - has_many :purchases
-- has_many :shippings
 
 
 ## items テーブル
@@ -30,14 +29,12 @@
 |prefectures_id     | integer       | null: false |
 |date_time_id       | integer       | null: false |
 |price              | integer       |             |
-|seller             | string        | null: false |
 |user               | references    | null: false,foreign_key: true |
 
 
 ### Association
 - belongs_to :user
-- has_one :purchase
-- has_many :shippings
+- belongs_to :purchase
 
 ## purchases テーブル
 
@@ -50,7 +47,7 @@
 ### Association
 - belongs_to :user
 - belongs_to :item
-- belongs_to :shipping
+- has_one :shippings
 
 ## shippings テーブル
 
@@ -66,6 +63,4 @@
 
 
 ### Association
-- belongs_to :user
-- belongs_to :item
-- has_one :purchase
+- belongs_to :purchase
