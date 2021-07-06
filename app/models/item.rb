@@ -22,9 +22,11 @@ class Item < ApplicationRecord
     belongs_to :shipping_charge
     belongs_to :status
 
-    validates :category_id, numericality: { other_than: 1 }
-    validates :delivery_day_id, numericality: { other_than: 1 }
-    validates :prefecture_id, numericality: { other_than: 1 }
-    validates :shipping_charge_id, numericality: { other_than: 1 }
-    validates :status_id, numericality: { other_than: 1 }
+    with_options numericality: { other_than: 1 } do
+    validates :category_id
+    validates :delivery_day_id
+    validates :prefecture_id
+    validates :shipping_charge_id
+    validates :status_id
+  end
 end
