@@ -68,5 +68,20 @@ require 'rails_helper'
         @item.valid?
         expect(@item.errors.full_messages).to include "Price is not included in the list"
        end
+       it '半角英数混合では登録できないこと' do
+         @item.price = 'aaa111'
+         @item.valid?
+         expect(@item.errors.full_messages).to include "Price is not included in the list"
+       end
+       it '半角英語だけでは登録できないこと' do
+        @item.price = 'aaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is not included in the list"
+       end
+       it '価格は、¥300~¥9,999,999の間のみでなければ投稿できない' do
+        @item.price = '9999999999'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is not included in the list"
+       end
     end
   end
