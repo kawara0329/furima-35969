@@ -1,4 +1,5 @@
 class PurchasesController < ApplicationController
+  before_action :find_params, only: [:index, :create]
   def index
     @purchase_shipping = PurchaseShipping.new
   end
@@ -6,6 +7,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase_shipping = PurchaseShipping.new(purchase_params)
     if @purchase_shipping.valid?
+      pay_item
       @purchase_shipping.save
       redirect_to root_path
     else
@@ -16,6 +18,20 @@ class PurchasesController < ApplicationController
   private
 
   def purchase_params
-    params_require(:purchase_shipping).pirmit(:postal_code, :prefectures_id, :municipality, :address, :building, :tel).merge(user_id:current_user.id)
+    params.require(:purchase_shipping).permit(:postal_code, :prefecture_id, :municipality, :address, :building, :tel).merge(user_id:current_user.id, item_id: params[:item_id], token: params[:token])
   end
+
+  def pay_item
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+      Payjp::Charge.create(
+        amount: @item.price,
+        card: purchase_params[:token],
+        currency: 'jpy'
+      )
+  end
+
+  def find_params
+    @item = Item.find(params[:item_id])
+  end
+
 end
