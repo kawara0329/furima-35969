@@ -13,6 +13,7 @@ describe '商品購入機能' do
       expect(@purchase_shipping).to be_valid
     end
     it '建物名が入力されていなくても購入ができる' do
+      @purchase_shipping.building = ''
       expect(@purchase_shipping).to be_valid
     end
   end

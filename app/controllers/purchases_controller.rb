@@ -1,7 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_params
-  before_action :user_move_to_index
   before_action :sold_out_item
   def index
     @purchase_shipping = PurchaseShipping.new
@@ -38,11 +37,7 @@ class PurchasesController < ApplicationController
   end
 
   def sold_out_item
-    redirect_to root_path if @item.purchase.present?
-  end
-
-  def user_move_to_index
-    if current_user.id == @item.user.id
+    if current_user.id == @item.user.id || @item.purchase.present?
       redirect_to root_path
     end
   end
