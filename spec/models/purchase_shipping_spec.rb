@@ -41,6 +41,16 @@ describe '商品購入機能' do
       @purchase_shipping.valid?
       expect(@purchase_shipping.errors.full_messages).to include("Tel can't be blank")
     end
+    it '電話番号が10桁以上11桁以内の半角数値でなければ登録できない' do
+      @purchase_shipping.tel = ''
+      @purchase_shipping.valid?
+      expect(@purchase_shipping.errors.full_messages).to include("Tel can't be blank")
+    end
+    it '郵便番号は、「3桁ハイフン4桁」の半角文字列でなければ登録できない' do
+      @purchase_shipping.postal_code = ''
+      @purchase_shipping.valid?
+      expect(@purchase_shipping.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+    end
   end
  end
 end

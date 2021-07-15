@@ -7,7 +7,7 @@ class PurchaseShipping
     validates :prefecture_id
     validates :municipality
     validates :address
-    validates :tel, format: {with: /\A0[5789]0[-]?\d{4}[-]?\d{4}\z/, message: ""}
+    validates :tel, format: {with: /\A\d{10,11}\z/, message: "Tel can't be blank"}
     validates :token
   end
   
