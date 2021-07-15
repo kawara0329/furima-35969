@@ -1,8 +1,8 @@
 class PurchasesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_params, only: [:index, :create]
+  before_action :find_params
   before_action :user_move_to_index
-  before_action :sold_out_item, only: [:index]
+  before_action :sold_out_item
   def index
     @purchase_shipping = PurchaseShipping.new
   end
