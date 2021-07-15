@@ -1,12 +1,17 @@
 require 'rails_helper'
 RSpec.describe PurchaseShipping, type: :model do
   before do
+    @user = FactoryBot.build(:user)
+    @item = FactoryBot.build(:item)
     @purchase_shipping = FactoryBot.build(:purchase_shipping)
   end
 
 describe '商品購入機能' do
   context '購入ができる時' do
     it 'カード情報、有効期限、セキュリティコード、郵便番号、都道府県、市区町村、番地、電話番号が存在すれば登録できる' do
+      expect(@purchase_shipping).to be_valid
+    end
+    it '建物名が入力されていなくても購入ができる' do
       expect(@purchase_shipping).to be_valid
     end
   end
@@ -40,6 +45,21 @@ describe '商品購入機能' do
       @purchase_shipping.tel = ''
       @purchase_shipping.valid?
       expect(@purchase_shipping.errors.full_messages).to include("Tel can't be blank")
+    end
+    it 'user_idが空では登録できない' do
+      @purchase_shipping.user_id = ''
+      @purchase_shipping.valid?
+      expect(@purchase_shipping.errors.full_messages).to include("User can't be blank")
+    end
+    it 'item_idが空では登録できない' do
+      @purchase_shipping.item_id = ''
+      @purchase_shipping.valid?
+      expect(@purchase_shipping.errors.full_messages).to include("Item can't be blank")
+    end
+    it 'tokenが空では登録できない' do
+      @purchase_shipping.token = ''
+      @purchase_shipping.valid?
+      expect(@purchase_shipping.errors.full_messages).to include("Token can't be blank")
     end
     it '電話番号が10桁以上11桁以内の半角数値でなければ登録できない' do
       @purchase_shipping.tel = ''

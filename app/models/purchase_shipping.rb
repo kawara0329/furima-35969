@@ -1,6 +1,6 @@
 class PurchaseShipping
   include ActiveModel::Model
-  attr_accessor :item_id, :user_id, :postal_code, :prefecture_id, :municipality, :address, :building, :tel, :purchase_id, :token
+  attr_accessor :item_id, :user_id, :postal_code, :prefecture_id, :municipality, :address, :building, :tel, :token
 
   with_options presence: true do
     validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
@@ -9,6 +9,8 @@ class PurchaseShipping
     validates :address
     validates :tel, format: {with: /\A\d{10,11}\z/, message: "Tel can't be blank"}
     validates :token
+    validates :user_id
+    validates :item_id
   end
   
   def save
