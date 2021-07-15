@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :find_params, only: [:index, :create]
+  before_action :sold_out_item, only: [:index]
   def index
     @purchase_shipping = PurchaseShipping.new
   end
@@ -32,6 +33,10 @@ class PurchasesController < ApplicationController
 
   def find_params
     @item = Item.find(params[:item_id])
+  end
+
+  def sold_out_item
+    redirect_to root_path if @item.purchase.present?
   end
 
 end
